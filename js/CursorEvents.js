@@ -2,12 +2,32 @@ AFRAME.registerComponent('cursor_detected', {
     schema:{
         selectedItemId : {type: 'string', default: ''},
     }, init: function(){
+        this.handleClickEvent()
         this.handleEnterEvents();
         this.handleMouseLeaveEvents();       
 
-    },handlePlacesListState: function(){
+    },
+    handleClickEvent: function(){
+        this.el.addEventListener('click', evt =>{
+            const placesContainer = document.querySelector("#places-container")
+            const {state} = placesContainer.getAttribute('tour_action')
+
+            if(state === "places-list"){
+                const id = this.el.getAttribute("id")
+                const placesId= ["taj-mahal", "budapest", "eiffel-tower", "new-york-city"]
+
+                if(placesId.includes(id)){
+                    placesContainer.setAttribute('tour_action', {
+                        state: 'view',
+                        selected_card: id
+                    })
+                }
+            }
+        })
+    },
+    handlePlacesListState: function(){
         const id = this.el.getAttribute('id')
-        const placesId = ["taj_mahal_id", "budapest_id", "eiffel_tower_id", "new_york_id"]
+        const placesId = ["taj-mahal", "budapest", "eiffel-tower", "new-york-city"]
         if(placesId.includes(id)){
             const placeContainer = document.querySelector('#places-container')
             placeContainer.setAttribute("cursor_detected", {
