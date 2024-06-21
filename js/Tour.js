@@ -1,26 +1,58 @@
 AFRAME.registerComponent('tour_action',{
+    schema:{
+        state: {type: 'string', default: "places-list"},
+        selected_card: {type: 'string', default: '#card1'}
+    },    
     init: function(){
+
         this.placesContainer = this.el;
         this.createCards()
-    }, createCards: function(){
+    },
+    tick: function(){
+        const {state} = this.el.getAttribute('tour_action')
+
+        if(state === 'view'){
+            this.hiddenEl([this.placesContainer])
+            this.showView()
+        }
+    },
+    hiddenEl: function(eList){
+        eList.map(el =>{
+            el.setAttribute("visible", false)
+        })
+    },
+
+    showView: function(){
+        const {selected_card} = this.data
+
+        //Ponemos la imagen de 360° al cielo :)
+        const skyEl = document.querySelector('#main-container')
+        skyEl.setAttribute('material', {
+            src: `./360_images/${selected_card}/place-0.jpg`,
+            color: 'white'
+        })
+
+    },
+    
+     createCards: function(){
         const thumbNailsRef = [
             {
-                id: "taj_mahal_id",
+                id: "taj-mahal",
                 title: "Taj Mahal",
                 url: './assets/thumbnails/taj_mahal.png'
             },
             {
-                id: "budapest_id",
+                id: "budapest",
                 title: "Budapest",
                 url: './assets/thumbnails/budapest.jpg'
             },
             {
-                id: "eiffel_tower_id",
+                id: "eiffel-tower",
                 title: "Torre Eiffel",
                 url: './assets/thumbnails/eiffel_tower.jpg'
             },
             {
-                id: "new_york_id",
+                id: "new-york-city",
                 title: "Nueva York",
                 url: './assets/thumbnails/new_york_city.png'
             },
