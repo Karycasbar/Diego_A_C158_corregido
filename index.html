@@ -7,11 +7,13 @@
         <script src="https://unpkg.com/aframe-event-set-component@4.2.1/dist/aframe-event-set-component.min.js"></script>
         <script src="./js/Tour.js"></script>
         <script src="./js/CursorEvents.js"></script>
+        <script src="./js/SideView.js"></script>
     </head>
     <body>
         <a-scene id = "main-scene">
             <a-sky id = 'main-container' radius="5000" color = '#BFE9F1'></a-sky>
-            <a-entity id = 'places-container' tour_action cursor_detected></a-entity>
+            <a-entity id = 'places-container' tour_action cursor_detected cursor_detected></a-entity>
+            <a-entity id = 'vistas' places-helicopter cursor_detected></a-entity>
             <a-camera id = 'camera' wasd-controls="enabled: false">
                 <a-entity id = 'app-title' position="0 0.73 -1" text="font: exo2bold; 
                 align: center; width: 2; color: #000; value: ¡Es momento de viajar virtualmente">     
