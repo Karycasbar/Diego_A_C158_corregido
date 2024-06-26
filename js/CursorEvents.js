@@ -23,8 +23,33 @@ AFRAME.registerComponent('cursor_detected', {
                     })
                 }
             }
+            if(state === "view"){
+                this.handleViewState()
+            }
+            if(state === "change-view"){
+                this.handleViewState()
+            }
         })
-    },
+    }, handleViewState: function() {
+        const el = this.el;
+        const id = el.getAttribute("id");
+        const placesContainer = document.querySelector("#places-container");
+        const { selectedItemId } = placesContainer.getAttribute("cursor_detected");
+       // Mantener todas las imágenes con el ID de las imágenes más la extensión .jpg
+        const sideViewPlacesId = ["place-1", "place-2", "place-3", "place-4"];
+        if (sideViewPlacesId.includes(id)) {      
+          placesContainer.setAttribute("tour_action", {
+            state: "change-view"
+          });
+    
+          const skyEl = document.querySelector("#main-container");
+          // Establecer la imagen de 360 grados al elemento del cielo.
+          skyEl.setAttribute("material", {
+            src: `./360_images/${selectedItemId}/${id}.jpg`,
+            color: "#fff"
+          });     
+        }
+      },
     handlePlacesListState: function(){
         const id = this.el.getAttribute('id')
         const placesId = ["taj-mahal", "budapest", "eiffel-tower", "new-york-city"]
